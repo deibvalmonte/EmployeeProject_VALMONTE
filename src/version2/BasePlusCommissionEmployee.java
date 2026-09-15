@@ -3,48 +3,57 @@ package version2;
 import java.util.Locale;
 
 public class BasePlusCommissionEmployee {
-    private version1.BasePlusCommissionEmployee employee;
-    private Name name;
+    private int empID;
+    private Name empName;
     private MyDate birthDate;
+    private MyDate dateHired;
+    private double totalSale;
+    private double baseSalary;
 
     public BasePlusCommissionEmployee() {
-        this.employee = new version1.BasePlusCommissionEmployee();
-        this.name = new Name();
-        this.birthDate = new MyDate();
+        this(0, new Name(), new MyDate(), new MyDate(), 0, 0);
     }
 
-    public BasePlusCommissionEmployee(int empID, Name name, MyDate birthDate, double totalSale, double baseSalary) {
-        this.employee = new version1.BasePlusCommissionEmployee(empID, name.toString());
-        this.name = name;
-        this.birthDate = birthDate;
+    public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
+                                     double totalSale, double baseSalary) {
+        setEmpID(empID);
+        setEmpName(empName);
+        setBirthDate(birthDate);
+        setDateHired(dateHired);
         setTotalSale(totalSale);
         setBaseSalary(baseSalary);
     }
 
     public int getEmpID() {
-        return employee.getEmpID();
+        return empID;
     }
 
     public void setEmpID(int empID) {
-        employee.setEmpID(empID);
+        this.empID = empID;
     }
 
-    public String getEmpName() {
-        return employee.getEmpName();
-    }
-
-    public void setEmpName(String empName) {
-        employee.setEmpName(empName);
-        this.name = Name.fromFullName(empName);
+    public Name getEmpName() {
+        return empName;
     }
 
     public Name getName() {
-        return name;
+        return empName;
     }
 
-    public void setName(Name name) {
-        this.name = name;
-        employee.setEmpName(name.toString());
+    public void setEmpName(Name empName) {
+        this.empName = empName != null ? empName : new Name();
+    }
+
+    public void setName(Name empName) {
+        setEmpName(empName);
+    }
+
+    public void setEmpName(String empNameText) {
+        setEmpName(Name.fromFullName(empNameText));
+    }
+
+    public String getEmpNameString() {
+        return empName == null ? new Name().toString() : empName.toString();
     }
 
     public MyDate getBirthDate() {
@@ -52,50 +61,89 @@ public class BasePlusCommissionEmployee {
     }
 
     public void setBirthDate(MyDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = birthDate != null ? birthDate : new MyDate();
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired != null ? dateHired : new MyDate();
     }
 
     public double getTotalSale() {
-        return employee.getTotalSale();
+        return totalSale;
     }
 
     public void setTotalSale(double totalSale) {
-        employee.setTotalSale(totalSale);
+        if (totalSale < 0) {
+            throw new IllegalArgumentException("Total sales cannot be negative.");
+        }
+        this.totalSale = totalSale;
     }
 
     public double getBaseSalary() {
-        return employee.getBaseSalary();
+        return baseSalary;
     }
 
     public void setBaseSalary(double baseSalary) {
-        employee.setBaseSalary(baseSalary);
+        if (baseSalary < 0) {
+            throw new IllegalArgumentException("Base salary cannot be negative.");
+        }
+        this.baseSalary = baseSalary;
     }
 
     public double computeSalary() {
-        return employee.computeSalary();
+        return computeBaseSalary();
+    }
+
+    public double computeSalary(int currentMonth) {
+        double salary = computeBaseSalary();
+        if (birthDate != null && birthDate.getMonth() == currentMonth) {
+            salary += 5000.00;
+        }
+        return salary;
+    }
+
+    private double computeBaseSalary() {
+        double commissionRate;
+
+        if (totalSale < 50000) {
+            commissionRate = 0.05;
+        } else if (totalSale < 100000) {
+            commissionRate = 0.10;
+        } else if (totalSale < 500000) {
+            commissionRate = 0.15;
+        } else {
+            commissionRate = 0.20;
+        }
+
+        return baseSalary + (totalSale * commissionRate);
     }
 
     public void displayBasePlusCommissionEmployee() {
-        System.out.printf(Locale.US, "ID: %d | Name: %s | BirthDate: %s | Total Sales: ₱%,.2f | Base Salary: ₱%,.2f%n",
-                employee.getEmpID(), name, birthDate, employee.getTotalSale(), employee.getBaseSalary());
+        System.out.printf(Locale.US,
+                "ID: %d | Name: %s | DOB: %s | Hired: %s | Total Sales: ₱%,.2f | Base Salary: ₱%,.2f%n",
+                empID, empName, birthDate, dateHired, totalSale, baseSalary);
     }
 
     @Override
     public String toString() {
         double commissionRate;
 
-        if (employee.getTotalSale() < 50000) {
+        if (totalSale < 50000) {
             commissionRate = 0.05;
-        } else if (employee.getTotalSale() < 100000) {
+        } else if (totalSale < 100000) {
             commissionRate = 0.10;
-        } else if (employee.getTotalSale() < 500000) {
+        } else if (totalSale < 500000) {
             commissionRate = 0.15;
         } else {
             commissionRate = 0.20;
         }
 
         return String.format(Locale.US,
-                "BasePlusCommissionEmployee [ID: %d, Name: %s, BirthDate: %s, Total Sales: ₱%,.2f, Base Salary: ₱%,.2f, Commission Rate: %.2f%%, Total Salary: ₱%,.2f]",
-                employee.getEmpID(), name, birthDate, employee.getTotalSale(), employee.getBaseSalary(), commissionRate * 100, computeSalary());
+                "BasePlusCommissionEmployee [ID: %d, Name: %s, DOB: %s, Hired: %s, Total Sales: ₱%,.2f, Base Salary: ₱%,.2f, Commission Rate: %.2f%%, Total Salary: ₱%,.2f]",
+                empID, empName, birthDate, dateHired, totalSale, baseSalary, commissionRate * 100, computeSalary());
     }
 }

@@ -3,47 +3,54 @@ package version2;
 import java.util.Locale;
 
 public class CommissionEmployee {
-    private version1.CommissionEmployee employee;
-    private Name name;
+    private int empID;
+    private Name empName;
     private MyDate birthDate;
+    private MyDate dateHired;
+    private double totalSale;
 
     public CommissionEmployee() {
-        this.employee = new version1.CommissionEmployee();
-        this.name = new Name();
-        this.birthDate = new MyDate();
+        this(0, new Name(), new MyDate(), new MyDate(), 0);
     }
 
-    public CommissionEmployee(int empID, Name name, MyDate birthDate, double totalSale) {
-        this.employee = new version1.CommissionEmployee(empID, name.toString());
-        this.name = name;
-        this.birthDate = birthDate;
+    public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
+        setEmpID(empID);
+        setEmpName(empName);
+        setBirthDate(birthDate);
+        setDateHired(dateHired);
         setTotalSale(totalSale);
     }
 
     public int getEmpID() {
-        return employee.getEmpID();
+        return empID;
     }
 
     public void setEmpID(int empID) {
-        employee.setEmpID(empID);
+        this.empID = empID;
     }
 
-    public String getEmpName() {
-        return employee.getEmpName();
-    }
-
-    public void setEmpName(String empName) {
-        employee.setEmpName(empName);
-        this.name = Name.fromFullName(empName);
+    public Name getEmpName() {
+        return empName;
     }
 
     public Name getName() {
-        return name;
+        return empName;
     }
 
-    public void setName(Name name) {
-        this.name = name;
-        employee.setEmpName(name.toString());
+    public void setEmpName(Name empName) {
+        this.empName = empName != null ? empName : new Name();
+    }
+
+    public void setName(Name empName) {
+        setEmpName(empName);
+    }
+
+    public void setEmpName(String empNameText) {
+        setEmpName(Name.fromFullName(empNameText));
+    }
+
+    public String getEmpNameString() {
+        return empName == null ? new Name().toString() : empName.toString();
     }
 
     public MyDate getBirthDate() {
@@ -51,30 +58,66 @@ public class CommissionEmployee {
     }
 
     public void setBirthDate(MyDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = birthDate != null ? birthDate : new MyDate();
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired != null ? dateHired : new MyDate();
     }
 
     public double getTotalSale() {
-        return employee.getTotalSale();
+        return totalSale;
     }
 
     public void setTotalSale(double totalSale) {
-        employee.setTotalSale(totalSale);
+        if (totalSale < 0) {
+            throw new IllegalArgumentException("Total sales cannot be negative.");
+        }
+        this.totalSale = totalSale;
     }
 
     public double computeSalary() {
-        return employee.computeSalary();
+        return computeBaseSalary();
+    }
+
+    public double computeSalary(int currentMonth) {
+        double salary = computeBaseSalary();
+        if (birthDate != null && birthDate.getMonth() == currentMonth) {
+            salary += 5000.00;
+        }
+        return salary;
+    }
+
+    private double computeBaseSalary() {
+        double commissionRate;
+
+        if (totalSale < 50000) {
+            commissionRate = 0.05;
+        } else if (totalSale < 100000) {
+            commissionRate = 0.10;
+        } else if (totalSale < 500000) {
+            commissionRate = 0.15;
+        } else {
+            commissionRate = 0.20;
+        }
+
+        return totalSale * commissionRate;
     }
 
     public void displayCommissionEmployee() {
-        System.out.printf(Locale.US, "ID: %d | Name: %s | BirthDate: %s | Total Sales: ₱%,.2f%n",
-                employee.getEmpID(), name, birthDate, employee.getTotalSale());
+        System.out.printf(Locale.US,
+                "ID: %d | Name: %s | DOB: %s | Hired: %s | Total Sales: ₱%,.2f%n",
+                empID, empName, birthDate, dateHired, totalSale);
     }
 
     @Override
     public String toString() {
         return String.format(Locale.US,
-                "CommissionEmployee [ID: %d, Name: %s, BirthDate: %s, Total Sales: ₱%,.2f, Total Salary: ₱%,.2f]",
-                employee.getEmpID(), name, birthDate, employee.getTotalSale(), computeSalary());
+                "CommissionEmployee [ID: %d, Name: %s, DOB: %s, Hired: %s, Total Sales: ₱%,.2f, Total Salary: ₱%,.2f]",
+                empID, empName, birthDate, dateHired, totalSale, computeSalary());
     }
 }

@@ -17,15 +17,12 @@ public class MyDate {
     }
 
     public MyDate(int day, int month, int year) {
-        if (isValidDate(day, month, year)) {
-            this.day = day;
-            this.month = month;
-            this.year = year;
-        } else {
-            this.day = 1;
-            this.month = 1;
-            this.year = 2000;
+        if (!isValidDate(day, month, year)) {
+            throw new IllegalArgumentException("Invalid date: " + day + "/" + month + "/" + year);
         }
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public int getDay() {
@@ -33,9 +30,12 @@ public class MyDate {
     }
 
     public void setDay(int day) {
-        if (isValidDate(day, month, year)) {
+        if (month == 0) {
             this.day = day;
+            return;
         }
+        validateDate(day, month, year);
+        this.day = day;
     }
 
     public int getMonth() {
@@ -43,9 +43,12 @@ public class MyDate {
     }
 
     public void setMonth(int month) {
-        if (isValidDate(day, month, year)) {
+        if (year == 0) {
             this.month = month;
+            return;
         }
+        validateDate(day, month, year);
+        this.month = month;
     }
 
     public int getYear() {
@@ -53,13 +56,23 @@ public class MyDate {
     }
 
     public void setYear(int year) {
-        if (isValidDate(day, month, year)) {
+        if (month == 0) {
             this.year = year;
+            return;
         }
+        validateDate(day, month, year);
+        this.year = year;
+    }
+
+    public static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
     public static boolean isValidDate(int day, int month, int year) {
         if (month < 1 || month > 12) {
+            return false;
+        }
+        if (year < 0) {
             return false;
         }
 
@@ -73,8 +86,14 @@ public class MyDate {
         return day >= 1 && day <= maxDay;
     }
 
-    public static boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    public void displayDate() {
+        System.out.println(this);
+    }
+
+    private void validateDate(int newDay, int newMonth, int newYear) {
+        if (!isValidDate(newDay, newMonth, newYear)) {
+            throw new IllegalArgumentException("Invalid date: " + newDay + "/" + newMonth + "/" + newYear);
+        }
     }
 
     @Override

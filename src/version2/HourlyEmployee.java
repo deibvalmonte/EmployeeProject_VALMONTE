@@ -3,48 +3,57 @@ package version2;
 import java.util.Locale;
 
 public class HourlyEmployee {
-    private version1.HourlyEmployee employee;
-    private Name name;
+    private int empID;
+    private Name empName;
     private MyDate birthDate;
+    private MyDate dateHired;
+    private float totalHoursWorked;
+    private double ratePerHour;
 
     public HourlyEmployee() {
-        this.employee = new version1.HourlyEmployee();
-        this.name = new Name();
-        this.birthDate = new MyDate();
+        this(0, new Name(), new MyDate(), new MyDate(), 0, 0);
     }
 
-    public HourlyEmployee(int empID, Name name, MyDate birthDate, float totalHoursWorked, double ratePerHour) {
-        this.employee = new version1.HourlyEmployee(empID, name.toString());
-        this.name = name;
-        this.birthDate = birthDate;
+    public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
+                          float totalHoursWorked, double ratePerHour) {
+        setEmpID(empID);
+        setEmpName(empName);
+        setBirthDate(birthDate);
+        setDateHired(dateHired);
         setTotalHoursWorked(totalHoursWorked);
         setRatePerHour(ratePerHour);
     }
 
     public int getEmpID() {
-        return employee.getEmpID();
+        return empID;
     }
 
     public void setEmpID(int empID) {
-        employee.setEmpID(empID);
+        this.empID = empID;
     }
 
-    public String getEmpName() {
-        return employee.getEmpName();
-    }
-
-    public void setEmpName(String empName) {
-        employee.setEmpName(empName);
-        this.name = Name.fromFullName(empName);
+    public Name getEmpName() {
+        return empName;
     }
 
     public Name getName() {
-        return name;
+        return empName;
     }
 
-    public void setName(Name name) {
-        this.name = name;
-        employee.setEmpName(name.toString());
+    public void setEmpName(Name empName) {
+        this.empName = empName != null ? empName : new Name();
+    }
+
+    public void setName(Name empName) {
+        setEmpName(empName);
+    }
+
+    public void setEmpName(String empNameText) {
+        setEmpName(Name.fromFullName(empNameText));
+    }
+
+    public String getEmpNameString() {
+        return empName == null ? new Name().toString() : empName.toString();
     }
 
     public MyDate getBirthDate() {
@@ -52,38 +61,71 @@ public class HourlyEmployee {
     }
 
     public void setBirthDate(MyDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = birthDate != null ? birthDate : new MyDate();
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired != null ? dateHired : new MyDate();
     }
 
     public float getTotalHoursWorked() {
-        return employee.getTotalHoursWorked();
+        return totalHoursWorked;
     }
 
     public void setTotalHoursWorked(float totalHoursWorked) {
-        employee.setTotalHoursWorked(totalHoursWorked);
+        if (totalHoursWorked < 0) {
+            throw new IllegalArgumentException("Total hours worked cannot be negative.");
+        }
+        this.totalHoursWorked = totalHoursWorked;
     }
 
     public double getRatePerHour() {
-        return employee.getRatePerHour();
+        return ratePerHour;
     }
 
     public void setRatePerHour(double ratePerHour) {
-        employee.setRatePerHour(ratePerHour);
+        if (ratePerHour < 0) {
+            throw new IllegalArgumentException("Rate per hour cannot be negative.");
+        }
+        this.ratePerHour = ratePerHour;
     }
 
     public double computeSalary() {
-        return employee.computeSalary();
+        return computeBaseSalary();
+    }
+
+    public double computeSalary(int currentMonth) {
+        double salary = computeBaseSalary();
+        if (birthDate != null && birthDate.getMonth() == currentMonth) {
+            salary += 5000.00;
+        }
+        return salary;
+    }
+
+    private double computeBaseSalary() {
+        if (totalHoursWorked <= 40) {
+            return totalHoursWorked * ratePerHour;
+        }
+
+        double regularPay = 40 * ratePerHour;
+        double overtimePay = (totalHoursWorked - 40) * ratePerHour * 1.5;
+        return regularPay + overtimePay;
     }
 
     public void displayHourlyEmployee() {
-        System.out.printf(Locale.US, "ID: %d | Name: %s | BirthDate: %s | Hours: %.2f | Rate: ₱%,.2f/hr%n",
-                employee.getEmpID(), name, birthDate, employee.getTotalHoursWorked(), employee.getRatePerHour());
+        System.out.printf(Locale.US,
+                "ID: %d | Name: %s | DOB: %s | Hired: %s | Hours: %.2f | Rate: ₱%,.2f/hr%n",
+                empID, empName, birthDate, dateHired, totalHoursWorked, ratePerHour);
     }
 
     @Override
     public String toString() {
         return String.format(Locale.US,
-                "HourlyEmployee [ID: %d, Name: %s, BirthDate: %s, Hours: %.2f, Rate: ₱%,.2f, Total Salary: ₱%,.2f]",
-                employee.getEmpID(), name, birthDate, employee.getTotalHoursWorked(), employee.getRatePerHour(), computeSalary());
+                "HourlyEmployee [ID: %d, Name: %s, DOB: %s, Hired: %s, Hours: %.2f, Rate: ₱%,.2f, Total Salary: ₱%,.2f]",
+                empID, empName, birthDate, dateHired, totalHoursWorked, ratePerHour, computeSalary());
     }
 }

@@ -3,48 +3,57 @@ package version2;
 import java.util.Locale;
 
 public class PieceWorkerEmployee {
-    private version1.PieceWorkerEmployee employee;
-    private Name name;
+    private int empID;
+    private Name empName;
     private MyDate birthDate;
+    private MyDate dateHired;
+    private int totalPiecesFinished;
+    private double ratePerPiece;
 
     public PieceWorkerEmployee() {
-        this.employee = new version1.PieceWorkerEmployee();
-        this.name = new Name();
-        this.birthDate = new MyDate();
+        this(0, new Name(), new MyDate(), new MyDate(), 0, 0);
     }
 
-    public PieceWorkerEmployee(int empID, Name name, MyDate birthDate, int totalPiecesFinished, double ratePerPiece) {
-        this.employee = new version1.PieceWorkerEmployee(empID, name.toString());
-        this.name = name;
-        this.birthDate = birthDate;
+    public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
+                              int totalPiecesFinished, double ratePerPiece) {
+        setEmpID(empID);
+        setEmpName(empName);
+        setBirthDate(birthDate);
+        setDateHired(dateHired);
         setTotalPiecesFinished(totalPiecesFinished);
         setRatePerPiece(ratePerPiece);
     }
 
     public int getEmpID() {
-        return employee.getEmpID();
+        return empID;
     }
 
     public void setEmpID(int empID) {
-        employee.setEmpID(empID);
+        this.empID = empID;
     }
 
-    public String getEmpName() {
-        return employee.getEmpName();
-    }
-
-    public void setEmpName(String empName) {
-        employee.setEmpName(empName);
-        this.name = Name.fromFullName(empName);
+    public Name getEmpName() {
+        return empName;
     }
 
     public Name getName() {
-        return name;
+        return empName;
     }
 
-    public void setName(Name name) {
-        this.name = name;
-        employee.setEmpName(name.toString());
+    public void setEmpName(Name empName) {
+        this.empName = empName != null ? empName : new Name();
+    }
+
+    public void setName(Name empName) {
+        setEmpName(empName);
+    }
+
+    public void setEmpName(String empNameText) {
+        setEmpName(Name.fromFullName(empNameText));
+    }
+
+    public String getEmpNameString() {
+        return empName == null ? new Name().toString() : empName.toString();
     }
 
     public MyDate getBirthDate() {
@@ -52,38 +61,67 @@ public class PieceWorkerEmployee {
     }
 
     public void setBirthDate(MyDate birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = birthDate != null ? birthDate : new MyDate();
+    }
+
+    public MyDate getDateHired() {
+        return dateHired;
+    }
+
+    public void setDateHired(MyDate dateHired) {
+        this.dateHired = dateHired != null ? dateHired : new MyDate();
     }
 
     public int getTotalPiecesFinished() {
-        return employee.getTotalPiecesFinished();
+        return totalPiecesFinished;
     }
 
     public void setTotalPiecesFinished(int totalPiecesFinished) {
-        employee.setTotalPiecesFinished(totalPiecesFinished);
+        if (totalPiecesFinished < 0) {
+            throw new IllegalArgumentException("Total pieces finished cannot be negative.");
+        }
+        this.totalPiecesFinished = totalPiecesFinished;
     }
 
     public double getRatePerPiece() {
-        return employee.getRatePerPiece();
+        return ratePerPiece;
     }
 
     public void setRatePerPiece(double ratePerPiece) {
-        employee.setRatePerPiece(ratePerPiece);
+        if (ratePerPiece < 0) {
+            throw new IllegalArgumentException("Rate per piece cannot be negative.");
+        }
+        this.ratePerPiece = ratePerPiece;
     }
 
     public double computeSalary() {
-        return employee.computeSalary();
+        return computeBaseSalary();
+    }
+
+    public double computeSalary(int currentMonth) {
+        double salary = computeBaseSalary();
+        if (birthDate != null && birthDate.getMonth() == currentMonth) {
+            salary += 5000.00;
+        }
+        return salary;
+    }
+
+    private double computeBaseSalary() {
+        double basePay = totalPiecesFinished * ratePerPiece;
+        double bonusPay = (Math.floor(totalPiecesFinished / 100.0)) * (10 * ratePerPiece);
+        return basePay + bonusPay;
     }
 
     public void displayPieceWorkerEmployee() {
-        System.out.printf(Locale.US, "ID: %d | Name: %s | BirthDate: %s | Pieces Finished: %d | Rate/Piece: ₱%,.2f%n",
-                employee.getEmpID(), name, birthDate, employee.getTotalPiecesFinished(), employee.getRatePerPiece());
+        System.out.printf(Locale.US,
+                "ID: %d | Name: %s | DOB: %s | Hired: %s | Pieces Finished: %d | Rate/Piece: ₱%,.2f%n",
+                empID, empName, birthDate, dateHired, totalPiecesFinished, ratePerPiece);
     }
 
     @Override
     public String toString() {
         return String.format(Locale.US,
-                "PieceWorkerEmployee [ID: %d, Name: %s, BirthDate: %s, Pieces: %d, Rate: ₱%,.2f, Total Salary: ₱%,.2f]",
-                employee.getEmpID(), name, birthDate, employee.getTotalPiecesFinished(), employee.getRatePerPiece(), computeSalary());
+                "PieceWorkerEmployee [ID: %d, Name: %s, DOB: %s, Hired: %s, Pieces: %d, Rate: ₱%,.2f, Total Salary: ₱%,.2f]",
+                empID, empName, birthDate, dateHired, totalPiecesFinished, ratePerPiece, computeSalary());
     }
 }

@@ -7,38 +7,22 @@ public class Name {
     private String suffix;
 
     public Name() {
-        this("N/A", null, "N/A", null);
+        this("N/A", "", "N/A", "");
+    }
+
+    public Name(String firstName, String lastName) {
+        this(firstName, "", lastName, "");
     }
 
     public Name(String firstName, String middleName, String lastName) {
-        this(firstName, middleName, lastName, null);
+        this(firstName, middleName, lastName, "");
     }
 
     public Name(String firstName, String middleName, String lastName, String suffix) {
-        this.firstName = firstName == null ? "N/A" : firstName;
-        this.middleName = middleName;
-        this.lastName = lastName == null ? "N/A" : lastName;
-        this.suffix = suffix;
-    }
-
-    public static Name fromFullName(String fullName) {
-        if (fullName == null || fullName.isBlank()) {
-            return new Name("N/A", null, "N/A", null);
-        }
-
-        String[] parts = fullName.trim().split("\\s+");
-        if (parts.length == 1) {
-            return new Name(parts[0], null, "N/A", null);
-        }
-
-        if (parts.length == 2) {
-            return new Name(parts[0], null, parts[1], null);
-        }
-
-        String firstName = parts[0];
-        String lastName = parts[parts.length - 1];
-        String middle = String.join(" ", java.util.Arrays.copyOfRange(parts, 1, parts.length - 1));
-        return new Name(firstName, middle, lastName, null);
+        setFirstName(firstName);
+        setMiddleName(middleName);
+        setLastName(lastName);
+        setSuffix(suffix);
     }
 
     public String getFirstName() {
@@ -46,7 +30,7 @@ public class Name {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName == null ? "N/A" : firstName;
+        this.firstName = normalizeNamePart(firstName, "N/A");
     }
 
     public String getMiddleName() {
@@ -54,7 +38,7 @@ public class Name {
     }
 
     public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+        this.middleName = middleName == null ? "" : middleName.trim();
     }
 
     public String getLastName() {
@@ -62,7 +46,7 @@ public class Name {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName == null ? "N/A" : lastName;
+        this.lastName = normalizeNamePart(lastName, "N/A");
     }
 
     public String getSuffix() {
@@ -70,7 +54,7 @@ public class Name {
     }
 
     public void setSuffix(String suffix) {
-        this.suffix = suffix;
+        this.suffix = suffix == null ? "" : suffix.trim();
     }
 
     public String getMiddleInitial() {
@@ -79,7 +63,37 @@ public class Name {
         }
 
         String trimmed = middleName.trim();
-        return trimmed.length() == 1 ? trimmed + "." : trimmed.substring(0, 1) + ".";
+        return trimmed.substring(0, 1).toUpperCase() + ".";
+    }
+
+    public void displayName() {
+        System.out.println(this);
+    }
+
+    public static Name fromFullName(String fullName) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            return new Name();
+        }
+
+        String[] parts = fullName.trim().split("\\s+");
+        if (parts.length == 1) {
+            return new Name(parts[0], "", "N/A", "");
+        }
+        if (parts.length == 2) {
+            return new Name(parts[0], parts[1]);
+        }
+
+        String firstName = parts[0];
+        String lastName = parts[parts.length - 1];
+        String middleName = String.join(" ", java.util.Arrays.copyOfRange(parts, 1, parts.length - 1));
+        return new Name(firstName, middleName, lastName, "");
+    }
+
+    private String normalizeNamePart(String value, String fallback) {
+        if (value == null || value.trim().isEmpty()) {
+            return fallback;
+        }
+        return value.trim();
     }
 
     @Override
