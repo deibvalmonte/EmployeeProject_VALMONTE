@@ -27,3 +27,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Large local tool artifacts ###
+tools/*.zip
+tools/jdk-21.0.12.1+1/
