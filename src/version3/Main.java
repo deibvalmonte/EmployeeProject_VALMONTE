@@ -1,4 +1,4 @@
-package version3;
+﻿package version3;
 
 import java.util.Locale;
 
@@ -7,7 +7,7 @@ public class Main {
         Locale.setDefault(Locale.US);
         int targetMonth = 9;
 
-        // Create employees
+
         HourlyEmployee h = new HourlyEmployee(101, new Name("Alice", "M", "Smith"), new MyDate(18,9,2000), new MyDate(1,6,2022), 45, 200);
         PieceWorkerEmployee p = new PieceWorkerEmployee(201, new Name("Bob", "C", "Jones", "Jr."), new MyDate(5,4,1998), new MyDate(15,1,2023), 270, 15.0);
         CommissionEmployee c = new CommissionEmployee(301, new Name("Carol", "L", "Tan"), new MyDate(30,12,1987), new MyDate(15,1,2020), 120000);
@@ -23,7 +23,7 @@ public class Main {
         for (Employee e : roster) {
             System.out.println(idx + ". " + e.toString());
             double basePay = 0.0;
-            if (e instanceof HourlyEmployee) basePay = ((HourlyEmployee) e).computeSalary() - e.computeSalary(-1); // subtract bonus if any
+            if (e instanceof HourlyEmployee) basePay = ((HourlyEmployee) e).computeSalary() - e.computeSalary(-1);
             if (e instanceof PieceWorkerEmployee) basePay = ((PieceWorkerEmployee) e).computeSalary() - e.computeSalary(-1);
             if (e instanceof CommissionEmployee && !(e instanceof BasePlusCommissionEmployee)) basePay = ((CommissionEmployee) e).computeSalary() - e.computeSalary(-1);
             if (e instanceof BasePlusCommissionEmployee) basePay = ((BasePlusCommissionEmployee) e).getBaseSalary() + (((BasePlusCommissionEmployee) e).getTotalSale() * ((BasePlusCommissionEmployee) e).getCommissionRate());
@@ -67,3 +67,4 @@ public class Main {
         }
     }
 }
+

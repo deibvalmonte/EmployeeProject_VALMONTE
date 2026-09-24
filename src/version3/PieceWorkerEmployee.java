@@ -1,4 +1,4 @@
-package version3;
+﻿package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -79,3 +79,4 @@ public class PieceWorkerEmployee extends Employee implements Cloneable {
         return (PieceWorkerEmployee) super.clone();
     }
 }
+

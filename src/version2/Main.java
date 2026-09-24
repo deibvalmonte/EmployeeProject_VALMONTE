@@ -1,4 +1,4 @@
-package version2;
+﻿package version2;
 
 import java.util.Locale;
 
@@ -89,3 +89,4 @@ public class Main {
         System.out.println(base2);
     }
 }
+

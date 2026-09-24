@@ -1,4 +1,4 @@
-package version3;
+﻿package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -78,7 +78,8 @@ public class HourlyEmployee extends Employee implements Cloneable {
     @Override
     public HourlyEmployee clone() {
         HourlyEmployee copy = (HourlyEmployee) super.clone();
-        // primitives copied; composite fields already deep-cloned by Employee.clone()
+
         return copy;
     }
 }
+

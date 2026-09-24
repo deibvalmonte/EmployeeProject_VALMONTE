@@ -1,4 +1,4 @@
-package version3;
+﻿package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -32,9 +32,7 @@ public class Employee implements Cloneable {
     public MyDate getDateHired() { return dateHired; }
     public void setDateHired(MyDate dateHired) { this.dateHired = dateHired == null ? new MyDate() : dateHired; }
 
-    /**
-     * Base computeSalary returns only birthday bonus; subclasses must add their own base pay and call super to include bonus.
-     */
+
     public double computeSalary(int currentMonth) {
         double bonus = 0.0;
         if (birthDate != null && birthDate.getMonth() == currentMonth) {
@@ -83,3 +81,5 @@ public class Employee implements Cloneable {
         }
     }
 }
+
+

@@ -1,4 +1,4 @@
-package version2;
+﻿package version2;
 
 import java.util.Locale;
 
@@ -101,3 +101,5 @@ public class MyDate {
         return String.format(Locale.US, "%02d %s %04d", day, MONTH_NAMES[month - 1], year);
     }
 }
+
+

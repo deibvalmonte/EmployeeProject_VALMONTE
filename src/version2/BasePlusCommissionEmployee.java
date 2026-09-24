@@ -1,4 +1,4 @@
-package version2;
+﻿package version2;
 
 import java.util.Locale;
 
@@ -147,3 +147,4 @@ public class BasePlusCommissionEmployee {
                 empID, empName, birthDate, dateHired, totalSale, baseSalary, commissionRate * 100, computeSalary());
     }
 }
+

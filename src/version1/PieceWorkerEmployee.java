@@ -1,4 +1,4 @@
-package version1;
+﻿package version1;
 
 import java.util.Locale;
 
@@ -83,3 +83,5 @@ public class PieceWorkerEmployee {
                 empID, empName, totalPiecesFinished, ratePerPiece, computeSalary());
     }
 }
+
+

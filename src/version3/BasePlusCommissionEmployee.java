@@ -1,4 +1,4 @@
-package version3;
+﻿package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -62,3 +62,4 @@ public class BasePlusCommissionEmployee extends CommissionEmployee implements Cl
         return (BasePlusCommissionEmployee) super.clone();
     }
 }
+
