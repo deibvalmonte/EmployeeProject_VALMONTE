@@ -1,4 +1,4 @@
-﻿package version4;
+package version4;
 
 import java.util.Locale;
 import java.util.Objects;
