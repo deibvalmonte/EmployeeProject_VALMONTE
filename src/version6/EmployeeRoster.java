@@ -7,8 +7,6 @@ import java.util.Locale;
 public class EmployeeRoster {
     private final List<Employee> empList;
 
-    @SuppressWarnings("this-escape")
-
     public EmployeeRoster() {
         this.empList = new ArrayList<>();
     }
@@ -96,13 +94,5 @@ public class EmployeeRoster {
             System.out.printf(Locale.US, "ID: %d | Name: %s | Payout: ₱%,.2f%s%n",
                     employee.getEmpID(), employee.getEmpName(), salary, bonusLabel);
         }
-    }
-
-    private String monthName(int month) {
-        String[] months = {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        if (month < 1 || month > 12) {
-            return "Unknown";
-        }
-        return months[month];
     }
 }

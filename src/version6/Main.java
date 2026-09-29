@@ -1,7 +1,5 @@
 package version6;
 
-import java.util.Locale;
-
 public class Main {
     public static void main(String[] args) {
         System.out.println("======================================================================");
@@ -43,10 +41,31 @@ public class Main {
         System.out.println("======================================================================");
 
         EmployeeRoster roster = new EmployeeRoster();
-        roster.addEmployee(new HourlyEmployee(101, new Name("Alice", "M.", "Smith"), new MyDate(15, 12, 1995), new MyDate(1, 1, 2020), 80f, 150.0));
-        roster.addEmployee(new PieceWorkerEmployee(201, new Name("Bob", "C.", "Jones", "Jr."), new MyDate(2, 10, 1985), new MyDate(5, 3, 2018), 350, 10.0));
-        roster.addEmployee(new CommissionEmployee(301, new Name("Maria", "L.", "Reyes"), new MyDate(20, 9, 1992), new MyDate(3, 6, 2019), 200000));
-        roster.addEmployee(new BasePlusCommissionEmployee(401, new Name("Kevin", "S.", "Tan"), new MyDate(11, 12, 1988), new MyDate(7, 7, 2015), 250000, 15000));
+        boolean added = roster.addEmployee(new HourlyEmployee(101, new Name("Alice", "M.", "Smith"), new MyDate(15, 12, 1995), new MyDate(1, 1, 2020), 80f, 150.0));
+        if (!added) {
+            throw new IllegalStateException("Failed to add hourly employee");
+        }
+
+        added = roster.addEmployee(new PieceWorkerEmployee(201, new Name("Bob", "C.", "Jones", "Jr."), new MyDate(2, 10, 1985), new MyDate(5, 3, 2018), 350, 10.0));
+        if (!added) {
+            throw new IllegalStateException("Failed to add piece worker employee");
+        }
+
+        added = roster.addEmployee(new CommissionEmployee(301, new Name("Maria", "L.", "Reyes"), new MyDate(20, 9, 1992), new MyDate(3, 6, 2019), 200000));
+        if (!added) {
+            throw new IllegalStateException("Failed to add commission employee");
+        }
+
+        added = roster.addEmployee(new BasePlusCommissionEmployee(401, new Name("Kevin", "S.", "Tan"), new MyDate(11, 12, 1988), new MyDate(7, 7, 2015), 250000, 15000));
+        if (!added) {
+            throw new IllegalStateException("Failed to add base-plus commission employee");
+        }
+
+        System.out.printf("Roster Size: %d | Hourly: %d | Piece Worker: %d | Commission: %d | Base Plus Commission: %d%n",
+                roster.countEmployees(), roster.countHE(), roster.countPWE(), roster.countCE(), roster.countBPCE());
+        System.out.printf("Search Employee ID 201: %s%n", roster.searchEmployee(201) != null ? "Found" : "Not found");
+        System.out.printf("Remove Employee ID 201: %s%n", roster.removeEmployee(201) != null ? "Removed" : "Not found");
+        roster.displayAllEmployees();
         roster.displayPayroll(9);
 
         // Compile-time proof: direct instantiation of abstract Employee is illegal.
