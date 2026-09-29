@@ -10,7 +10,11 @@ public class MyDate implements Cloneable {
 
     private static final String[] MONTH_NAMES = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
+    @SuppressWarnings("this-escape")
+
     public MyDate() { this(1,1,2000); }
+
+    @SuppressWarnings("this-escape")
 
     public MyDate(int day, int month, int year) {
         if (!isValidDate(day, month, year)) throw new IllegalArgumentException("Invalid date: " + day + "/" + month + "/" + year);

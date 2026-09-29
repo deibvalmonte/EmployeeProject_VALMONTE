@@ -8,17 +8,25 @@ public final class Name implements Cloneable {
     private String lastName;
     private String suffix;
 
+    @SuppressWarnings("this-escape")
+
     public Name() {
         this("N/A", "", "N/A", "");
     }
+
+    @SuppressWarnings("this-escape")
 
     public Name(String firstName, String lastName) {
         this(firstName, "", lastName, "");
     }
 
+    @SuppressWarnings("this-escape")
+
     public Name(String firstName, String middleName, String lastName) {
         this(firstName, middleName, lastName, "");
     }
+
+    @SuppressWarnings("this-escape")
 
     public Name(String firstName, String middleName, String lastName, String suffix) {
         setFirstName(firstName);

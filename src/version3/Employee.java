@@ -1,4 +1,4 @@
-﻿package version3;
+package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -9,9 +9,13 @@ public class Employee implements Cloneable {
     private MyDate birthDate;
     private MyDate dateHired;
 
+    @SuppressWarnings("this-escape")
+
     public Employee() {
         this(0, new Name(), new MyDate(), new MyDate());
     }
+
+    @SuppressWarnings("this-escape")
 
     public Employee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         setEmpID(empID);

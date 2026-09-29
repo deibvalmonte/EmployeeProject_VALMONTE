@@ -1,4 +1,4 @@
-﻿package version1;
+package version1;
 
 import java.util.Locale;
 
@@ -8,6 +8,8 @@ public class HourlyEmployee {
     private float totalHoursWorked;
     private double ratePerHour;
 
+    @SuppressWarnings("this-escape")
+
     public HourlyEmployee() {
         this.empID = 0;
         this.empName = "N/A";
@@ -15,12 +17,16 @@ public class HourlyEmployee {
         this.ratePerHour = 0;
     }
 
+    @SuppressWarnings("this-escape")
+
     public HourlyEmployee(int empID, String empName) {
         this.empID = empID;
         this.empName = empName;
         this.totalHoursWorked = 0;
         this.ratePerHour = 0;
     }
+
+    @SuppressWarnings("this-escape")
 
     public HourlyEmployee(int empID, String empName, float totalHoursWorked, double ratePerHour) {
         this.empID = empID;

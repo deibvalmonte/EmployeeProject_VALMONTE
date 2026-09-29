@@ -1,4 +1,4 @@
-﻿package version3;
+package version3;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -7,11 +7,15 @@ public class HourlyEmployee extends Employee implements Cloneable {
     private float totalHoursWorked;
     private double ratePerHour;
 
+    @SuppressWarnings("this-escape")
+
     public HourlyEmployee() {
         super();
         this.totalHoursWorked = 0f;
         this.ratePerHour = 0.0;
     }
+
+    @SuppressWarnings("this-escape")
 
     public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
                           float totalHoursWorked, double ratePerHour) {

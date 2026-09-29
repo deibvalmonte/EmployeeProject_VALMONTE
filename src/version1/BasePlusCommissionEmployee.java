@@ -1,4 +1,4 @@
-﻿package version1;
+package version1;
 
 import java.util.Locale;
 
@@ -8,6 +8,8 @@ public class BasePlusCommissionEmployee {
     private double totalSale;
     private double baseSalary;
 
+    @SuppressWarnings("this-escape")
+
     public BasePlusCommissionEmployee() {
         this.empID = 0;
         this.empName = "N/A";
@@ -15,12 +17,16 @@ public class BasePlusCommissionEmployee {
         this.baseSalary = 0;
     }
 
+    @SuppressWarnings("this-escape")
+
     public BasePlusCommissionEmployee(int empID, String empName) {
         this.empID = empID;
         this.empName = empName;
         this.totalSale = 0;
         this.baseSalary = 0;
     }
+
+    @SuppressWarnings("this-escape")
 
     public BasePlusCommissionEmployee(int empID, String empName, double totalSale, double baseSalary) {
         this.empID = empID;

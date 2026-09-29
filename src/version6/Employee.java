@@ -6,9 +6,13 @@ public abstract class Employee implements Cloneable {
     private MyDate birthDate;
     private MyDate dateHired;
 
+    @SuppressWarnings("this-escape")
+
     protected Employee() {
         this(0, new Name("N/A", "N/A"), new MyDate(1, 1, 2000), new MyDate(1, 1, 2000));
     }
+
+    @SuppressWarnings("this-escape")
 
     protected Employee(int empID, Name empName, MyDate birthDate, MyDate dateHired) {
         if (empName == null) {

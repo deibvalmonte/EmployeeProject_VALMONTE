@@ -1,4 +1,4 @@
-﻿package version2;
+package version2;
 
 import java.util.Locale;
 
@@ -10,9 +10,13 @@ public class HourlyEmployee {
     private float totalHoursWorked;
     private double ratePerHour;
 
+    @SuppressWarnings("this-escape")
+
     public HourlyEmployee() {
         this(0, new Name(), new MyDate(), new MyDate(), 0, 0);
     }
+
+    @SuppressWarnings("this-escape")
 
     public HourlyEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
                           float totalHoursWorked, double ratePerHour) {

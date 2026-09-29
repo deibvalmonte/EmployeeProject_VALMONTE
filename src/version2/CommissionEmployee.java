@@ -1,4 +1,4 @@
-﻿package version2;
+package version2;
 
 import java.util.Locale;
 
@@ -9,9 +9,13 @@ public class CommissionEmployee {
     private MyDate dateHired;
     private double totalSale;
 
+    @SuppressWarnings("this-escape")
+
     public CommissionEmployee() {
         this(0, new Name(), new MyDate(), new MyDate(), 0);
     }
+
+    @SuppressWarnings("this-escape")
 
     public CommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale) {
         setEmpID(empID);

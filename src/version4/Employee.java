@@ -9,15 +9,19 @@ public class Employee implements Cloneable {
     private version4.MyDate birthDate;
     private version4.MyDate dateHired;
 
+    @SuppressWarnings("this-escape")
+
     public Employee() {
         this(0, new version4.Name(), new version4.MyDate(), new version4.MyDate());
     }
 
+    @SuppressWarnings("this-escape")
+
     public Employee(int empID, version4.Name empName, version4.MyDate birthDate, version4.MyDate dateHired) {
-        setEmpID(empID);
-        setEmpName(empName);
-        setBirthDate(birthDate);
-        setDateHired(dateHired);
+        this.empID = empID;
+        this.empName = (empName == null) ? new version4.Name() : empName;
+        this.birthDate = (birthDate == null) ? new version4.MyDate() : birthDate;
+        this.dateHired = (dateHired == null) ? new version4.MyDate() : dateHired;
     }
 
     public int getEmpID() { return empID; }
@@ -31,6 +35,10 @@ public class Employee implements Cloneable {
 
     public version4.MyDate getDateHired() { return dateHired; }
     public void setDateHired(version4.MyDate dateHired) { this.dateHired = dateHired == null ? new version4.MyDate() : dateHired; }
+
+    public double computeSalary(int currentMonth) { return 0.0; }
+
+    public double computeSalary() { return computeSalary(-1); }
 
     public void displayEmployee() {
         System.out.printf(Locale.US, "[ID: %d, Name: %s, DOB: %s, Hired: %s]", empID, empName, birthDate, dateHired);

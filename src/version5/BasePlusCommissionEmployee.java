@@ -6,7 +6,11 @@ import java.util.Objects;
 public class BasePlusCommissionEmployee extends CommissionEmployee implements Cloneable {
     private double baseSalary;
 
+    @SuppressWarnings("this-escape")
+
     public BasePlusCommissionEmployee() { super(); this.baseSalary = 0.0; }
+
+    @SuppressWarnings("this-escape")
 
     public BasePlusCommissionEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, double totalSale, double baseSalary) {
         super(empID, empName, birthDate, dateHired, totalSale);

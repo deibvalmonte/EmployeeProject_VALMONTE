@@ -6,11 +6,15 @@ public class PieceWorkerEmployee extends Employee implements Cloneable {
     private int totalPiecesFinished;
     private double ratePerPiece;
 
+    @SuppressWarnings("this-escape")
+
     public PieceWorkerEmployee() {
         super();
         this.totalPiecesFinished = 0;
         this.ratePerPiece = 0.0;
     }
+
+    @SuppressWarnings("this-escape")
 
     public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired, int totalPiecesFinished, double ratePerPiece) {
         super(empID, empName, birthDate, dateHired);

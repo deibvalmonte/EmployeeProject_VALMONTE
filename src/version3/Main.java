@@ -1,4 +1,4 @@
-﻿package version3;
+package version3;
 
 import java.util.Locale;
 

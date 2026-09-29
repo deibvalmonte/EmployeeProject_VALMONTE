@@ -1,4 +1,4 @@
-﻿package version2;
+package version2;
 
 import java.util.Locale;
 
@@ -10,9 +10,13 @@ public class PieceWorkerEmployee {
     private int totalPiecesFinished;
     private double ratePerPiece;
 
+    @SuppressWarnings("this-escape")
+
     public PieceWorkerEmployee() {
         this(0, new Name(), new MyDate(), new MyDate(), 0, 0);
     }
+
+    @SuppressWarnings("this-escape")
 
     public PieceWorkerEmployee(int empID, Name empName, MyDate birthDate, MyDate dateHired,
                               int totalPiecesFinished, double ratePerPiece) {

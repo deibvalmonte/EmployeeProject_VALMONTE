@@ -7,6 +7,8 @@ import java.util.Locale;
 public class EmployeeRoster {
     private final List<Employee> empList;
 
+    @SuppressWarnings("this-escape")
+
     public EmployeeRoster() {
         this.empList = new ArrayList<>();
     }

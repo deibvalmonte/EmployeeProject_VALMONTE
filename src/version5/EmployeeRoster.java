@@ -7,7 +7,11 @@ import java.util.Locale;
 public class EmployeeRoster {
     private List<Employee> empList;
 
+    @SuppressWarnings("this-escape")
+
     public EmployeeRoster() { this.empList = new ArrayList<>(); }
+
+    @SuppressWarnings("this-escape")
 
     public EmployeeRoster(int initialCapacity) { this.empList = new ArrayList<>(Math.max(1, initialCapacity)); }
 

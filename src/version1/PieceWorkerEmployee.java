@@ -1,4 +1,4 @@
-﻿package version1;
+package version1;
 
 import java.util.Locale;
 
@@ -8,6 +8,8 @@ public class PieceWorkerEmployee {
     private int totalPiecesFinished;
     private double ratePerPiece;
 
+    @SuppressWarnings("this-escape")
+
     public PieceWorkerEmployee() {
         this.empID = 0;
         this.empName = "N/A";
@@ -15,12 +17,16 @@ public class PieceWorkerEmployee {
         this.ratePerPiece = 0;
     }
 
+    @SuppressWarnings("this-escape")
+
     public PieceWorkerEmployee(int empID, String empName) {
         this.empID = empID;
         this.empName = empName;
         this.totalPiecesFinished = 0;
         this.ratePerPiece = 0;
     }
+
+    @SuppressWarnings("this-escape")
 
     public PieceWorkerEmployee(int empID, String empName, int totalPiecesFinished, double ratePerPiece) {
         this.empID = empID;
